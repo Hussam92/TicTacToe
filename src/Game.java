@@ -1,6 +1,8 @@
-package com.itani.game;
-
 import java.util.Scanner;
+
+import com.itani.game.TicTacToe;
+import com.itani.game.TicTacToeReader;
+import com.itani.gui.GameUI;
 
 public class Game {
 
@@ -8,23 +10,30 @@ public class Game {
     public static final char PLAYER_X = 'X';
     public static final char PLAYER_O = 'O';
 
+    public static TicTacToe ticTacToe;
+
+
     // TicTacToe game
     public static void main(String[] args) {
         // Create a new game
-        TicTacToe game = new TicTacToe();
         Scanner input = new Scanner(System.in);
+
+        GameUI gui = new GameUI();
+        gui.buildGUI();
+        gui.showGUI();
+        
         char currentPlayer = PLAYER_X;
         // Start the game
         // Loop until game is over
-        while (game.gameOver() == ' ') {
+        while (Game.ticTacToe.gameOver() == ' ') {
             // Print the field
-            game.printField();
-            TicTacToeReader.getPlayerMove(game, currentPlayer, input);
+            Game.ticTacToe.printField();
+            TicTacToeReader.getPlayerMove(Game.ticTacToe, currentPlayer, input);
             
             currentPlayer = swapPlayers(currentPlayer);
         }
 
-        game.printWinner(game.gameOver());
+        Game.ticTacToe.printWinner(Game.ticTacToe.gameOver());
         input.close();
     }
 
@@ -35,5 +44,10 @@ public class Game {
         } else {
             return PLAYER_X;
         }
+    }
+
+    public static void startGame()
+    {
+        Game.ticTacToe = new TicTacToe();
     }
 }
